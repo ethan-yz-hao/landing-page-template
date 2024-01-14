@@ -23,7 +23,6 @@
  *
  */
 
-
 /**
  * End Global Variables
  * Start Helper Functions
@@ -39,6 +38,18 @@
  */
 
 // build the nav
+const main = document.querySelector('main');
+const n_section = main.querySelectorAll('section').length;
+const nav_lst_frag = document.createDocumentFragment();
+
+for (let i=0; i <n_section; i++) {
+    const lst_item = document.createElement('li');
+    lst_item.innerText = `Section ${i+1}`;
+    nav_lst_frag.appendChild(lst_item);
+}
+
+const nav_lst = document.getElementById('navbar__list');
+nav_lst.appendChild(nav_lst_frag);
 
 
 // Add class 'active' to section when near top of viewport
