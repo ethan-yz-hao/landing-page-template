@@ -72,7 +72,7 @@ function checkTop() {
     const box = header.getBoundingClientRect();
     if (box.bottom <= 50) {
         if (! nav_lst.contains(goto_top)) {
-            nav_lst.appendChild(goto_top);
+            nav_lst.insertBefore(goto_top, nav_lst.firstChild);
         }
     } else {
         if (nav_lst.contains(goto_top)) {
