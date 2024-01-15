@@ -56,7 +56,12 @@ nav_lst.appendChild(nav_lst_frag);
 
 
 // Scroll to anchor ID using scrollTO event
-
+function scrollToSection(evt) {
+    console.log('A paragraph was clicked: ' + evt.target.textContent);
+    const section_name = evt.target.innerText;
+    document.querySelector(`section[data-nav="${section_name}"]`).scrollIntoView({ block: 'start',  behavior: 'smooth' });
+}
+nav_lst.addEventListener('click', scrollToSection);
 
 /**
  * End Main Functions
