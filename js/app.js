@@ -36,36 +36,62 @@ for (let i=0; i <n_section; i++) {
     const lst_item = document.createElement('li');
     lst_item.innerText = `Section ${i+1}`;
     lst_item.className = 'menu__link';
+    lst_item.setAttribute('data-nav', `Section ${i+1}`);
     nav_lst_frag.appendChild(lst_item);
 }
 nav_lst.appendChild(nav_lst_frag);
 
-// Add class 'active' to section when near top of viewport
-
-
 // Scroll to anchor ID using scrollTO event
 function scrollToSection(evt) {
-    const section_name = evt.target.innerText;
+    const section_name = evt.target.getAttribute('data-nav');
     document.querySelector(`section[data-nav="${section_name}"]`).scrollIntoView({ block: 'start',  behavior: 'smooth' });
 }
 nav_lst.addEventListener('click', scrollToSection);
 
 // Set sections as active
-function makeActive(){
+function makeSectionActive(){
     for (const section of sections) {
         const box = section.getBoundingClientRect();
         if (box.top <= 200 && box.bottom >= 300) {
-            if (! section.classList.contains('your-active-class')) {
-                section.classList.add('your-active-class');
+            if (! section.classList.contains('section-active')) {
+                section.classList.add('section-active');
             }
         } else {
-            if (section.classList.contains('your-active-class')) {
-                section.classList.remove('your-active-class');
+            if (section.classList.contains('section-active')) {
+                section.classList.remove('section-active');
             }
         }
     }
 }
-document.addEventListener("scroll", makeActive)
+document.addEventListener("scroll", makeSectionActive);
+
+// Set navbar as active
+function makeNavBarActive(){
+    let ifFound = false;
+    for (const section of sections) {
+        const box = section.getBoundingClientRect();
+        const section_name = section.getAttribute('data-nav');
+        const li = document.querySelector(`li[data-nav="${section_name}"]`);
+        if (ifFound) {
+            if (li.classList.contains('navbar-active')) {
+                li.classList.remove('navbar-active');
+            }
+            continue;
+        }
+        if (box.bottom >= 300) {
+            if (! li.classList.contains('navbar-active')) {
+                li.classList.add('navbar-active');
+            }
+            ifFound = true;
+        } else {
+            if (li.classList.contains('navbar-active')) {
+                li.classList.remove('navbar-active');
+            }
+        }
+    }
+}
+document.addEventListener("scroll", makeNavBarActive);
+
 
 // Add go to top
 function checkTop() {
